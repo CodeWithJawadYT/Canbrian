@@ -1,0 +1,4538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cambrian Custom Painting | Making a Vivid Difference</title>
+    <meta
+      name="description"
+      content="Cambrian Custom Painting — Premium residential and commercial painting contractor in Calgary. Interior, exterior, stucco, stain, varnish, and new construction finishing."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%239B3CF7'/><stop offset='100%25' stop-color='%2306B6D4'/></linearGradient></defs><circle cx='16' cy='16' r='16' fill='url(%23g)'/></svg>"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --purple: #9b3cf7;
+        --purple-l: #c084fc;
+        --magenta: #e91e8c;
+        --magenta-l: #f472b6;
+        --teal: #06b6d4;
+        --teal-l: #67e8f9;
+        --green: #22c55e;
+        --gold: #f59e0b;
+        --black: #060608;
+        --dark: #0d0d12;
+        --dark2: #111118;
+        --card: #16161e;
+        --white: #fafafa;
+        --gray: #8b8b9a;
+        --gray-l: #c4c4cf;
+        --grad: linear-gradient(135deg, #9b3cf7 0%, #e91e8c 45%, #06b6d4 100%);
+        --logo-grad: linear-gradient(
+          90deg,
+          #9b3cf7 0%,
+          #d926c4 22%,
+          #e91e8c 40%,
+          #06b6d4 68%,
+          #22c55e 100%
+        );
+        --font-d: "Montserrat", sans-serif;
+        --font-b: "Inter", sans-serif;
+        --font-s: "Great Vibes", cursive;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: auto;
+      }
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--font-b);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      img {
+        display: block;
+      }
+      #cur-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--purple);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+      }
+      #cur-ring {
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid rgba(155, 60, 247, 0.55);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.28s,
+          height 0.28s,
+          border-color 0.28s;
+      }
+      @media (hover: none) {
+        #cur-dot,
+        #cur-ring {
+          display: none;
+        }
+        body {
+          cursor: auto;
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--dark);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--purple);
+        border-radius: 2px;
+      }
+      .pg {
+        display: none;
+        opacity: 0;
+      }
+      .pg.active {
+        display: block;
+        opacity: 1;
+      }
+      #nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        height: 72px;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition:
+          background 0.4s,
+          box-shadow 0.4s;
+      }
+      #nav.scrolled {
+        background: rgba(6, 6, 8, 0.93);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        box-shadow: 0 1px 0 rgba(155, 60, 247, 0.14);
+      }
+      .nl {
+        display: flex;
+        gap: 2.4rem;
+        list-style: none;
+      }
+      .nl a {
+        font-family: var(--font-b);
+        font-size: 0.76rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray-l);
+        text-decoration: none;
+        position: relative;
+        transition: color 0.25s;
+        cursor: pointer;
+      }
+      .nl a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1.5px;
+        background: var(--grad);
+        transition: width 0.3s;
+      }
+      .nl a:hover,
+      .nl a.act {
+        color: var(--white);
+      }
+      .nl a:hover::after,
+      .nl a.act::after {
+        width: 100%;
+      }
+      .ncta {
+        font-family: var(--font-b);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--white);
+        padding: 0.58rem 1.35rem;
+        border-radius: 50px;
+        background: var(--grad);
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        white-space: nowrap;
+      }
+      .ncta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(155, 60, 247, 0.42);
+      }
+      #ham {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        z-index: 1001;
+      }
+      .hl {
+        width: 26px;
+        height: 2px;
+        background: var(--white);
+        border-radius: 2px;
+        transition:
+          transform 0.35s,
+          opacity 0.35s;
+      }
+      #ham.open .hl:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      #ham.open .hl:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      #ham.open .hl:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+      #mob-menu {
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 6, 8, 0.97);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.6rem;
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      #mob-menu.open {
+        transform: translateX(0);
+      }
+      .mnl {
+        font-family: var(--font-d);
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateX(40px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      #mob-menu.open .mnl {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      #mob-menu.open .mnl:nth-child(1) {
+        transition-delay: 0.08s;
+      }
+      #mob-menu.open .mnl:nth-child(2) {
+        transition-delay: 0.14s;
+      }
+      #mob-menu.open .mnl:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      #mob-menu.open .mnl:nth-child(4) {
+        transition-delay: 0.26s;
+      }
+      #mob-menu.open .mnl:nth-child(5) {
+        transition-delay: 0.32s;
+      }
+      @media (max-width: 1023px) {
+        .nl,
+        .ncta {
+          display: none;
+        }
+        #ham {
+          display: flex;
+        }
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+      .logo-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+      }
+      .logo-brand {
+        font-family: var(--font-d);
+        font-weight: 800;
+        font-size: 0.98rem;
+        letter-spacing: 0.14em;
+        background: var(--logo-grad);
+        background-size: 100% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
+      #nav .logo-brand {
+        background: var(--logo-grad) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        color: transparent !important;
+      }
+      .logo-sub {
+        font-family: var(--font-b);
+        font-weight: 300;
+        font-size: 0.52rem;
+        letter-spacing: 0.26em;
+        color: var(--gray-l);
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      #hero {
+        position: relative;
+        width: 100%;
+        height: 100svh;
+        min-height: 600px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        background: var(--black);
+      }
+      .hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        will-change: transform;
+      }
+      .hero-ov {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(6, 6, 8, 0.9) 0%,
+          rgba(6, 6, 8, 0.52) 55%,
+          rgba(6, 6, 8, 0.72) 100%
+        );
+        z-index: 1;
+      }
+      .hero-bot {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 260px;
+        background: linear-gradient(to top, var(--black), transparent);
+        z-index: 2;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        max-width: 820px;
+        padding: 0 2.5rem;
+        margin-left: 6vw;
+      }
+      @media (max-width: 767px) {
+        .hero-content {
+          margin-left: 0;
+          padding: 0 1.4rem;
+        }
+      }
+      .h-eye {
+        font-family: var(--font-b);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--purple-l);
+        margin-bottom: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        opacity: 0;
+      }
+      .h-eye::before {
+        content: "";
+        width: 32px;
+        height: 1px;
+        background: var(--grad);
+        display: inline-block;
+      }
+      .h-title {
+        font-family: var(--font-d);
+        font-size: clamp(2.8rem, 7.5vw, 6.8rem);
+        font-weight: 800;
+        line-height: 1.02;
+        letter-spacing: -0.025em;
+        color: var(--white);
+      }
+      .h-tl {
+        overflow: hidden;
+        display: block;
+      }
+      .h-w {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(105%);
+      }
+      .h-script {
+        font-family: var(--font-s);
+        font-size: clamp(3.4rem, 9vw, 8.4rem);
+        font-weight: 400;
+        line-height: 1;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      .h-ul-svg {
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .h-ul-path {
+        stroke: url(#ulGrad);
+        stroke-width: 3;
+        fill: none;
+        stroke-linecap: round;
+        stroke-dasharray: 420;
+        stroke-dashoffset: 420;
+      }
+      .h-sub {
+        font-family: var(--font-b);
+        font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+        font-weight: 300;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gray-l);
+        margin-top: 2.2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        opacity: 0;
+      }
+      .h-arr {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        cursor: pointer;
+        transition: gap 0.3s;
+      }
+      .h-arr:hover {
+        gap: 1rem;
+      }
+      .h-arr-ic {
+        width: 38px;
+        height: 38px;
+        border: 1.5px solid rgba(155, 60, 247, 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.88rem;
+        color: var(--purple-l);
+        animation: bnc 2.2s ease-in-out infinite;
+      }
+      @keyframes bnc {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+      .h-stats {
+        position: absolute;
+        bottom: 3.5rem;
+        right: 5vw;
+        z-index: 3;
+        display: flex;
+        gap: 3rem;
+        opacity: 0;
+      }
+      .h-sn {
+        font-family: var(--font-d);
+        font-size: 2.2rem;
+        font-weight: 800;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+      .h-sl {
+        font-family: var(--font-b);
+        font-size: 0.63rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gray);
+        margin-top: 4px;
+      }
+      @media (max-width: 767px) {
+        .h-stats {
+          display: none;
+        }
+      }
+      .h-si {
+        position: absolute;
+        bottom: 2.8rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        opacity: 0;
+      }
+      .s-line {
+        width: 1px;
+        height: 48px;
+        background: linear-gradient(
+          to bottom,
+          rgba(155, 60, 247, 0.8),
+          transparent
+        );
+        animation: sp 2s ease-in-out infinite;
+      }
+      @keyframes sp {
+        0% {
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+        50% {
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        51% {
+          transform: scaleY(1);
+          transform-origin: bottom;
+        }
+        100% {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+      }
+      .mq-wrap {
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 1.4rem 0;
+        background: var(--dark2);
+        border-top: 1px solid rgba(155, 60, 247, 0.1);
+        border-bottom: 1px solid rgba(155, 60, 247, 0.1);
+      }
+      .mq-track {
+        display: inline-flex;
+        gap: 2.8rem;
+        animation: mq 26s linear infinite;
+      }
+      .mq-item {
+        font-family: var(--font-d);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gray);
+        display: flex;
+        align-items: center;
+        gap: 1.4rem;
+        white-space: nowrap;
+      }
+      .mq-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--grad);
+        flex-shrink: 0;
+      }
+      @keyframes mq {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .s-eye {
+        font-family: var(--font-b);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--purple-l);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+      .s-eye::before {
+        content: "";
+        width: 26px;
+        height: 1px;
+        background: var(--grad);
+      }
+      .s-h {
+        font-family: var(--font-d);
+        font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.022em;
+        color: var(--white);
+      }
+      .s-h span,
+      .gt {
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .s-p {
+        font-family: var(--font-b);
+        font-size: 0.96rem;
+        font-weight: 300;
+        line-height: 1.8;
+        color: var(--gray-l);
+      }
+      .ru {
+        opacity: 0;
+        transform: translateY(44px);
+      }
+      .rl {
+        opacity: 0;
+        transform: translateX(-44px);
+      }
+      .rr {
+        opacity: 0;
+        transform: translateX(44px);
+      }
+      .sc {
+        background: var(--card);
+        border: 1px solid rgba(155, 60, 247, 0.1);
+        border-radius: 16px;
+        padding: 2.2rem;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          border-color 0.4s,
+          box-shadow 0.4s;
+      }
+      .sc::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(155, 60, 247, 0.08),
+          rgba(6, 182, 212, 0.05)
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .sc:hover {
+        transform: translateY(-8px);
+        border-color: rgba(155, 60, 247, 0.44);
+        box-shadow: 0 24px 60px rgba(155, 60, 247, 0.2);
+      }
+      .sc:hover::before {
+        opacity: 1;
+      }
+      .sc-ico {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(155, 60, 247, 0.18),
+          rgba(6, 182, 212, 0.1)
+        );
+        border: 1px solid rgba(155, 60, 247, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+        transition: background 0.3s;
+      }
+      .sc:hover .sc-ico {
+        background: linear-gradient(
+          135deg,
+          rgba(155, 60, 247, 0.32),
+          rgba(6, 182, 212, 0.18)
+        );
+      }
+      .sc-t {
+        font-family: var(--font-d);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 0.55rem;
+        letter-spacing: -0.01em;
+      }
+      .sc-p {
+        font-family: var(--font-b);
+        font-size: 0.86rem;
+        font-weight: 300;
+        line-height: 1.7;
+        color: var(--gray);
+      }
+      .sc-arr {
+        position: absolute;
+        bottom: 1.7rem;
+        right: 1.7rem;
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(155, 60, 247, 0.22);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        color: var(--purple-l);
+        transform: rotate(-45deg);
+        transition:
+          transform 0.3s,
+          background 0.3s,
+          border-color 0.3s;
+      }
+      .sc:hover .sc-arr {
+        transform: rotate(0deg);
+        background: rgba(155, 60, 247, 0.2);
+        border-color: rgba(155, 60, 247, 0.5);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.95rem 2rem;
+        background: var(--grad);
+        color: #fff;
+        font-family: var(--font-d);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        text-decoration: none;
+      }
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 36px rgba(155, 60, 247, 0.42);
+      }
+      .btn-o {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.95rem 2rem;
+        background: transparent;
+        color: var(--white);
+        font-family: var(--font-d);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border-radius: 50px;
+        border: 1.5px solid rgba(155, 60, 247, 0.38);
+        cursor: pointer;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s,
+          border-color 0.3s,
+          background 0.3s;
+        text-decoration: none;
+      }
+      .btn-o:hover {
+        transform: translateY(-3px);
+        border-color: rgba(155, 60, 247, 0.7);
+        background: rgba(155, 60, 247, 0.1);
+        box-shadow: 0 8px 28px rgba(155, 60, 247, 0.18);
+      }
+      .ps {
+        position: relative;
+        padding-left: 3rem;
+      }
+      .ps::before {
+        content: attr(data-n);
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-family: var(--font-d);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--purple-l);
+        background: rgba(155, 60, 247, 0.12);
+        border: 1px solid rgba(155, 60, 247, 0.25);
+        border-radius: 50%;
+        width: 27px;
+        height: 27px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ps-line {
+        position: absolute;
+        left: 12px;
+        top: 31px;
+        width: 1px;
+        height: calc(100% + 1.5rem);
+        background: linear-gradient(
+          to bottom,
+          rgba(155, 60, 247, 0.28),
+          transparent
+        );
+      }
+      .ba {
+        position: relative;
+        overflow: hidden;
+        border-radius: 14px;
+        cursor: ew-resize;
+        user-select: none;
+        touch-action: none;
+      }
+      .ba-b {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .ba-clip {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .ba-clip img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .ba-div {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 5;
+      }
+      .ba-hnd {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
+      }
+      .ba-lbl {
+        position: absolute;
+        bottom: 1rem;
+        font-family: var(--font-b);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 0.28rem 0.75rem;
+        border-radius: 4px;
+        backdrop-filter: blur(8px);
+      }
+      .ba-lbl-b {
+        left: 1rem;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+      }
+      .ba-lbl-a {
+        right: 1rem;
+        background: rgba(155, 60, 247, 0.65);
+        color: #fff;
+      }
+      .ba-cap {
+        font-family: var(--font-b);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--gray-l);
+        margin-top: 0.9rem;
+        text-align: center;
+      }
+      .gi {
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+      }
+      .gi img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .gi:hover img {
+        transform: scale(1.07);
+      }
+      .gi-ov {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(6, 6, 8, 0.7),
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.38s;
+        display: flex;
+        align-items: flex-end;
+        padding: 1.1rem;
+      }
+      .gi:hover .gi-ov {
+        opacity: 1;
+      }
+      .gi-lbl {
+        font-family: var(--font-d);
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .cc {
+        background: var(--card);
+        border: 1px solid rgba(155, 60, 247, 0.1);
+        border-radius: 16px;
+        padding: 1.7rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.2rem;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .cc:hover {
+        border-color: rgba(155, 60, 247, 0.34);
+        transform: translateY(-4px);
+      }
+      .cc-ico {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(155, 60, 247, 0.18),
+          rgba(6, 182, 212, 0.1)
+        );
+        border: 1px solid rgba(155, 60, 247, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.05rem;
+        flex-shrink: 0;
+      }
+      .fg {
+        position: relative;
+        margin-bottom: 1.4rem;
+      }
+      .fl {
+        display: block;
+        font-family: var(--font-b);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gray);
+        margin-bottom: 0.45rem;
+      }
+      .fi,
+      .ft,
+      .fs {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 0.88rem 1.05rem;
+        font-family: var(--font-b);
+        font-size: 0.9rem;
+        color: var(--white);
+        outline: none;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s,
+          background 0.3s;
+      }
+      .fi:focus,
+      .ft:focus,
+      .fs:focus {
+        border-color: rgba(155, 60, 247, 0.5);
+        box-shadow: 0 0 0 3px rgba(155, 60, 247, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .fi::placeholder,
+      .ft::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .ft {
+        resize: none;
+        min-height: 136px;
+      }
+      .fs {
+        appearance: none;
+        cursor: pointer;
+      }
+      .fs option {
+        background: var(--card);
+      }
+      #footer {
+        background: var(--dark2);
+        border-top: 1px solid rgba(155, 60, 247, 0.1);
+        padding: 3rem 2rem 2rem;
+      }
+      .sp-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        background: var(--card);
+        border: 1px solid rgba(155, 60, 247, 0.14);
+        border-radius: 50px;
+        padding: 0.48rem 1.1rem 0.48rem 0.48rem;
+      }
+      .sp-ic {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--grad);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.76rem;
+        color: #fff;
+      }
+      .sp-tx {
+        font-family: var(--font-d);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: 0.05em;
+      }
+      #pt {
+        position: fixed;
+        inset: 0;
+        background: var(--black);
+        z-index: 8000;
+        transform-origin: right;
+        transform: scaleX(0);
+        pointer-events: none;
+      }
+      #lb {
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 6, 8, 0.96);
+        backdrop-filter: blur(20px);
+        z-index: 9990;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      #lb.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #lb-img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 10px;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+      }
+      #lb-x {
+        position: absolute;
+        top: 1.4rem;
+        right: 1.4rem;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.28s;
+      }
+      #lb-x:hover {
+        background: rgba(155, 60, 247, 0.28);
+      }
+      #toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(110px);
+        background: var(--card);
+        border: 1px solid rgba(34, 197, 94, 0.38);
+        border-radius: 50px;
+        padding: 0.75rem 1.7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-family: var(--font-b);
+        font-size: 0.83rem;
+        color: var(--white);
+        z-index: 9000;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
+        white-space: nowrap;
+      }
+      #toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+      @media (max-width: 1023px) {
+        .grid-2 {
+          grid-template-columns: 1fr !important;
+        }
+        .svc-inner {
+          grid-template-columns: 1fr !important;
+        }
+        .svc-inner img {
+          height: 220px !important;
+          border-radius: 0 !important;
+        }
+        .footer-g {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .stat-g {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+        .cc-g {
+          grid-template-columns: 1fr !important;
+        }
+        .rev-g {
+          grid-template-columns: 1fr 1fr !important;
+        }
+      }
+      @media (max-width: 767px) {
+        .svc-3 {
+          grid-template-columns: 1fr !important;
+        }
+        .val-3 {
+          grid-template-columns: 1fr !important;
+        }
+        .ba-g {
+          grid-template-columns: 1fr !important;
+        }
+        .gal-g {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .gal-g .g-span2 {
+          grid-row: span 1 !important;
+          height: 230px !important;
+        }
+        .gal-g .g-col2 {
+          grid-column: span 2 !important;
+        }
+        .footer-g {
+          grid-template-columns: 1fr !important;
+        }
+        .rev-g {
+          grid-template-columns: 1fr !important;
+        }
+        .rev-head {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 1.4rem !important;
+        }
+      }
+      @media (max-width: 500px) {
+        .gal-g {
+          grid-template-columns: 1fr !important;
+        }
+        .gal-g .g-col2 {
+          grid-column: span 1 !important;
+        }
+      }
+      .logo-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+      }
+      @media (max-width: 640px) {
+        .logo-img {
+          width: 44px;
+          height: 44px;
+        }
+      }
+      #hero {
+        --grad: linear-gradient(
+          90deg,
+          #ff2d55 0%,
+          #ff9500 16%,
+          #ffcc00 32%,
+          #34c759 50%,
+          #00c7be 66%,
+          #0a84ff 82%,
+          #bf5af2 100%
+        );
+        --purple-l: #ffcc00;
+      }
+      #hero .h-arr-ic {
+        border-color: rgba(255, 204, 0, 0.55);
+        color: #ffcc00;
+      }
+      #hero .s-line {
+        background: linear-gradient(
+          to bottom,
+          #ff2d55,
+          #ff9500,
+          #ffcc00,
+          #34c759,
+          #00c7be,
+          #0a84ff,
+          #bf5af2,
+          transparent
+        );
+      }
+
+      /* Client Reviews section */
+      .rev-badge {
+        display: flex;
+        align-items: center;
+        gap: 1.3rem;
+        background: var(--card);
+        border: 1px solid rgba(245, 158, 11, 0.22);
+        border-radius: 18px;
+        padding: 1.3rem 1.8rem;
+      }
+      .rev-badge-num {
+        font-family: var(--font-d);
+        font-weight: 800;
+        font-size: 2.6rem;
+        line-height: 1;
+        color: var(--gold);
+      }
+      .rev-stars {
+        color: var(--gold);
+        font-size: 1rem;
+        letter-spacing: 0.15em;
+        margin: 0.3rem 0 0.25rem;
+      }
+      .rev-badge-sub {
+        font-family: var(--font-b);
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gray);
+      }
+      .rev-card {
+        background: var(--card);
+        border: 1px solid rgba(155, 60, 247, 0.1);
+        border-radius: 16px;
+        padding: 1.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition:
+          transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          border-color 0.4s,
+          box-shadow 0.4s;
+      }
+      .rev-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(245, 158, 11, 0.34);
+        box-shadow: 0 20px 50px rgba(245, 158, 11, 0.12);
+      }
+      .rev-card-stars {
+        color: var(--gold);
+        font-size: 0.85rem;
+        letter-spacing: 0.14em;
+      }
+      .rev-quote {
+        font-family: var(--font-b);
+        font-size: 0.88rem;
+        font-weight: 300;
+        line-height: 1.75;
+        color: var(--gray-l);
+        flex-grow: 1;
+      }
+      .rev-person {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 0.4rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .rev-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--grad);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-d);
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .rev-name {
+        font-family: var(--font-d);
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .rev-loc {
+        font-family: var(--font-b);
+        font-size: 0.7rem;
+        color: var(--gray);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+    <div id="pt"></div>
+
+    <div id="lb">
+      <button id="lb-x"><i class="fa fa-times"></i></button>
+      <img id="lb-img" src="" alt="" />
+    </div>
+
+    <div id="toast">
+      <i class="fa fa-check-circle" style="color: #22c55e"></i>
+      <span id="t-msg">Message sent!</span>
+    </div>
+
+    <nav id="nav">
+      <div class="logo" data-nav="home">
+        <img
+          src="painting.jpeg"
+          alt="Cambrian Custom Painting"
+          class="logo-img"
+        />
+        <div class="logo-text">
+          <span class="logo-brand">CAMBRIAN </span>
+          <span class="logo-sub">Custom Painting</span>
+        </div>
+      </div>
+
+      <ul class="nl" id="nl">
+        <li><a data-nav="home" class="act">Home</a></li>
+        <li><a data-nav="about">About</a></li>
+        <li><a data-nav="services">Services</a></li>
+        <li><a data-nav="gallery">Gallery</a></li>
+        <li><a data-nav="contact">Contact</a></li>
+      </ul>
+
+      <button class="ncta" data-nav="contact">Get a Free Quote</button>
+      <div id="ham">
+        <span class="hl"></span><span class="hl"></span><span class="hl"></span>
+      </div>
+    </nav>
+
+    <div id="mob-menu">
+      <span class="mnl" data-nav="home">Home</span>
+      <span class="mnl" data-nav="about">About</span>
+      <span class="mnl" data-nav="services">Services</span>
+      <span class="mnl" data-nav="gallery">Gallery</span>
+      <span class="mnl" data-nav="contact">Contact</span>
+    </div>
+
+    <svg width="0" height="0" style="position: absolute; overflow: hidden">
+      <defs>
+        <linearGradient id="ulGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#9B3CF7" />
+          <stop offset="50%" stop-color="#E91E8C" />
+          <stop offset="100%" stop-color="#06B6D4" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="pg active" id="pg-home">
+      <section id="hero">
+        <img
+          class="hero-img"
+          id="hero-img"
+          src="background.jpg"
+          alt="Luxury interior space"
+        />
+        <div class="hero-ov"></div>
+        <div class="hero-bot"></div>
+
+        <div class="hero-content">
+          <p class="h-eye" id="h-eye">
+            Premium Painting Contractor &nbsp;·&nbsp; Calgary, AB
+          </p>
+          <h1 class="h-title">
+            <span class="h-tl"
+              ><span class="h-w" id="hw1">Making</span>&nbsp;<span
+                class="h-w"
+                id="hw2"
+                >a</span
+              ></span
+            >
+            <span class="h-tl"><span class="h-w" id="hw3">Vivid</span></span>
+            <span class="h-tl" style="padding-bottom: 0.3rem">
+              <span class="h-script" id="hw4">
+                Difference
+                <svg
+                  class="h-ul-svg"
+                  viewBox="0 0 400 16"
+                  height="14"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    class="h-ul-path"
+                    id="ul-path"
+                    d="M2,10 Q55,3 100,8 Q150,13 200,7 Q255,1 300,9 Q340,13 398,8"
+                  />
+                </svg>
+              </span>
+            </span>
+          </h1>
+          <div class="h-sub" id="h-sub">
+            What do you want to transform?
+            <span class="h-arr" data-nav="contact">
+              <span class="h-arr-ic"><i class="fa fa-arrow-right"></i></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="h-stats" id="h-stats">
+          <div>
+            <div class="h-sn">500+</div>
+            <div class="h-sl">Projects</div>
+          </div>
+          <div>
+            <div class="h-sn">15+</div>
+            <div class="h-sl">Years</div>
+          </div>
+          <div>
+            <div class="h-sn">100%</div>
+            <div class="h-sl">Satisfaction</div>
+          </div>
+        </div>
+        <div class="h-si" id="h-si"><div class="s-line"></div></div>
+      </section>
+
+      <div class="mq-wrap">
+        <div class="mq-track">
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Interior Painting</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Exterior Painting</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Stucco Removal</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Stain &amp; Varnish</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Commercial &amp; Hospitality</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>New Constructions</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Interior Painting</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Exterior Painting</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Stucco Removal</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Stain &amp; Varnish</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>Commercial &amp; Hospitality</span
+          >
+          <span class="mq-item"
+            ><span class="mq-dot"></span>New Constructions</span
+          >
+        </div>
+      </div>
+
+      <section style="background: var(--dark); padding: 7rem 2rem">
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+          "
+          class="grid-2"
+        >
+          <div class="rl">
+            <p class="s-eye">Our Philosophy</p>
+            <h2 class="s-h" style="margin-bottom: 1.4rem">
+              Every surface<br />tells a <span>story.</span>
+            </h2>
+            <p class="s-p" style="margin-bottom: 1.2rem">
+              At Cambrian Custom Painting, we believe color is the soul of every
+              space. Our master craftsmen approach each project as artists —
+              blending technical precision with a deep understanding of how
+              light, texture, and palette shape human experience.
+            </p>
+            <p class="s-p" style="margin-bottom: 2.4rem">
+              From intimate residential interiors to sprawling commercial
+              estates, we bring the same obsessive attention to detail, premium
+              materials, and elevated craft to every brushstroke.
+            </p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap">
+              <button class="btn" data-nav="services">
+                <i class="fa fa-paintbrush"></i> Our Services
+              </button>
+              <button class="btn-o" data-nav="gallery">
+                View Gallery <i class="fa fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="rr">
+            <div
+              style="
+                position: relative;
+                overflow: hidden;
+                border-radius: 16px;
+                height: 520px;
+              "
+            >
+              <img
+                id="par-img"
+                src="after3.jpg"
+                alt="Modern exterior finish"
+                style="
+                  width: 100%;
+                  height: 115%;
+                  object-fit: cover;
+                  border-radius: 16px;
+                "
+              />
+              <div
+                style="
+                  position: absolute;
+                  bottom: 2rem;
+                  left: -1.5rem;
+                  background: var(--card);
+                  border: 1px solid rgba(155, 60, 247, 0.2);
+                  border-radius: 14px;
+                  padding: 1.1rem 1.5rem;
+                  backdrop-filter: blur(14px);
+                "
+              >
+                <div class="h-sn" style="font-size: 1.6rem">500+</div>
+                <div class="h-sl" style="font-size: 0.66rem">
+                  Successful Projects
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="background: var(--black); padding: 6rem 2rem">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div style="text-align: center; margin-bottom: 3.5rem" class="ru">
+            <p class="s-eye" style="justify-content: center">What We Do</p>
+            <h2 class="s-h">Our <span>Core Services</span></h2>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 1.4rem;
+            "
+            class="svc-3"
+          >
+            <div class="sc ru">
+              <div class="sc-ico">
+                <i
+                  class="fa fa-house"
+                  style="
+                    background: linear-gradient(135deg, #9b3cf7, #e91e8c);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">Interior Painting</div>
+              <div class="sc-p">
+                Luxury living spaces transformed with premium paints and
+                masterful technique.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+            <div class="sc ru">
+              <div
+                class="sc-ico"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(6, 182, 212, 0.18),
+                    rgba(34, 197, 94, 0.1)
+                  );
+                  border-color: rgba(6, 182, 212, 0.2);
+                "
+              >
+                <i
+                  class="fa fa-building"
+                  style="
+                    background: linear-gradient(135deg, #06b6d4, #22c55e);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">Exterior Painting</div>
+              <div class="sc-p">
+                Architectural estates finished with durability and stunning curb
+                appeal.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+            <div class="sc ru">
+              <div
+                class="sc-ico"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(233, 30, 140, 0.18),
+                    rgba(155, 60, 247, 0.1)
+                  );
+                  border-color: rgba(233, 30, 140, 0.2);
+                "
+              >
+                <i
+                  class="fa fa-hammer"
+                  style="
+                    background: linear-gradient(135deg, #e91e8c, #9b3cf7);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">Stucco Removal</div>
+              <div class="sc-p">
+                Clean modern transformations revealing the true character of
+                your structure.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+            <div class="sc ru">
+              <div
+                class="sc-ico"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(245, 158, 11, 0.18),
+                    rgba(155, 60, 247, 0.1)
+                  );
+                  border-color: rgba(245, 158, 11, 0.2);
+                "
+              >
+                <i
+                  class="fa fa-tree"
+                  style="
+                    background: linear-gradient(135deg, #f59e0b, #9b3cf7);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">Stain &amp; Varnish</div>
+              <div class="sc-p">
+                Fine carpentry and millwork finishing that honors natural wood
+                beauty.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+            <div class="sc ru">
+              <div
+                class="sc-ico"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(6, 182, 212, 0.18),
+                    rgba(155, 60, 247, 0.1)
+                  );
+                  border-color: rgba(6, 182, 212, 0.2);
+                "
+              >
+                <i
+                  class="fa fa-hotel"
+                  style="
+                    background: linear-gradient(135deg, #06b6d4, #9b3cf7);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">Commercial &amp; Hospitality</div>
+              <div class="sc-p">
+                Hotels, motels, and restaurants elevated with brand-consistent
+                finishes.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+            <div class="sc ru">
+              <div
+                class="sc-ico"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(34, 197, 94, 0.18),
+                    rgba(6, 182, 212, 0.1)
+                  );
+                  border-color: rgba(34, 197, 94, 0.2);
+                "
+              >
+                <i
+                  class="fa fa-ruler-combined"
+                  style="
+                    background: linear-gradient(135deg, #22c55e, #06b6d4);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div class="sc-t">New Constructions</div>
+              <div class="sc-p">
+                Flawless builder handovers with meticulous prep and finish
+                standards.
+              </div>
+              <div class="sc-arr"><i class="fa fa-arrow-up-right"></i></div>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 3rem" class="ru">
+            <button class="btn" data-nav="services">
+              All Services <i class="fa fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style="
+          padding: 5rem 2rem;
+          background: var(--dark);
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+              ellipse 80% 60% at 50% 50%,
+              rgba(155, 60, 247, 0.1),
+              transparent 70%
+            );
+          "
+        ></div>
+        <div
+          style="
+            max-width: 740px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+          "
+          class="ru"
+        >
+          <p
+            class="s-eye"
+            style="justify-content: center; margin-bottom: 1.4rem"
+          >
+            Ready to Transform?
+          </p>
+          <h2 class="s-h" style="margin-bottom: 1.2rem">
+            Your dream space starts<br />with a <span>conversation.</span>
+          </h2>
+          <p
+            class="s-p"
+            style="
+              margin-bottom: 2.4rem;
+              max-width: 460px;
+              margin-left: auto;
+              margin-right: auto;
+              margin-top: 0;
+            "
+          >
+            Book a complimentary consultation and let our specialists craft a
+            tailored vision for your space.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="tel:4033831092" class="btn"
+              ><i class="fa fa-phone"></i> 403-383-1092</a
+            >
+            <button class="btn-o" data-nav="contact">Free Quote Form</button>
+          </div>
+        </div>
+      </section>
+
+      <footer id="footer">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 2fr 1fr 1fr;
+              gap: 3rem;
+              padding-bottom: 2.5rem;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            "
+            class="footer-g"
+          >
+            <div>
+              <div class="logo" style="margin-bottom: 1.2rem; cursor: default">
+                <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
+                  <defs>
+                    <linearGradient
+                      id="flg1"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stop-color="#9B3CF7" />
+                      <stop offset="42%" stop-color="#E91E8C" />
+                      <stop offset="100%" stop-color="#06B6D4" />
+                    </linearGradient>
+                    <linearGradient
+                      id="flg2"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stop-color="#22C55E" />
+                      <stop offset="100%" stop-color="#06B6D4" />
+                    </linearGradient>
+                    <linearGradient
+                      id="flg3"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stop-color="#9B3CF7" />
+                      <stop offset="100%" stop-color="#C084FC" />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="5"
+                    y="22"
+                    width="7"
+                    height="15"
+                    rx="2"
+                    transform="rotate(-42 10 30)"
+                    fill="url(#flg3)"
+                  />
+                  <path d="M7 27 L15 18 L21 21 L15 31 Z" fill="url(#flg1)" />
+                  <path
+                    d="M22 31 Q17 23 14 19 Q12 14 16.5 13.5 Q21 13 22 18 Q23 13 27.5 13.5 Q32 14 30 19 Q27 23 22 31 Z"
+                    fill="url(#flg1)"
+                  />
+                  <path
+                    d="M22 31 Q29 22 36 20 Q41 17.5 39 25 Q37 31 30 36 L22 40 Z"
+                    fill="url(#flg2)"
+                  />
+                  <circle
+                    cx="33"
+                    cy="37"
+                    r="2.2"
+                    fill="#22C55E"
+                    opacity=".85"
+                  />
+                  <circle
+                    cx="37"
+                    cy="32"
+                    r="1.6"
+                    fill="#06B6D4"
+                    opacity=".85"
+                  />
+                </svg>
+                <div class="logo-text">
+                  <span class="logo-brand">CAMBRIAN</span
+                  ><span class="logo-sub">Custom Painting</span>
+                </div>
+              </div>
+              <p
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.875rem;
+                  font-weight: 300;
+                  line-height: 1.8;
+                  color: var(--gray);
+                  max-width: 300px;
+                "
+              >
+                Calgary's premier painting contractor. Transforming residential
+                and commercial spaces with artisan craftsmanship since 2009.
+              </p>
+            </div>
+            <div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 0.68rem;
+                  font-weight: 700;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  color: var(--purple-l);
+                  margin-bottom: 1.2rem;
+                "
+              >
+                Quick Links
+              </div>
+              <ul
+                style="
+                  list-style: none;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.65rem;
+                "
+              >
+                <li>
+                  <span
+                    data-nav="home"
+                    style="
+                      font-family: var(--font-b);
+                      font-size: 0.875rem;
+                      color: var(--gray);
+                      cursor: pointer;
+                      transition: color 0.2s;
+                    "
+                    onmouseover="this.style.color = '#fff'"
+                    onmouseout="this.style.color = 'var(--gray)'"
+                    >Home</span
+                  >
+                </li>
+                <li>
+                  <span
+                    data-nav="about"
+                    style="
+                      font-family: var(--font-b);
+                      font-size: 0.875rem;
+                      color: var(--gray);
+                      cursor: pointer;
+                      transition: color 0.2s;
+                    "
+                    onmouseover="this.style.color = '#fff'"
+                    onmouseout="this.style.color = 'var(--gray)'"
+                    >About Us</span
+                  >
+                </li>
+                <li>
+                  <span
+                    data-nav="services"
+                    style="
+                      font-family: var(--font-b);
+                      font-size: 0.875rem;
+                      color: var(--gray);
+                      cursor: pointer;
+                      transition: color 0.2s;
+                    "
+                    onmouseover="this.style.color = '#fff'"
+                    onmouseout="this.style.color = 'var(--gray)'"
+                    >Services</span
+                  >
+                </li>
+                <li>
+                  <span
+                    data-nav="gallery"
+                    style="
+                      font-family: var(--font-b);
+                      font-size: 0.875rem;
+                      color: var(--gray);
+                      cursor: pointer;
+                      transition: color 0.2s;
+                    "
+                    onmouseover="this.style.color = '#fff'"
+                    onmouseout="this.style.color = 'var(--gray)'"
+                    >Gallery</span
+                  >
+                </li>
+                <li>
+                  <span
+                    data-nav="contact"
+                    style="
+                      font-family: var(--font-b);
+                      font-size: 0.875rem;
+                      color: var(--gray);
+                      cursor: pointer;
+                      transition: color 0.2s;
+                    "
+                    onmouseover="this.style.color = '#fff'"
+                    onmouseout="this.style.color = 'var(--gray)'"
+                    >Contact</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 0.68rem;
+                  font-weight: 700;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  color: var(--purple-l);
+                  margin-bottom: 1.2rem;
+                "
+              >
+                Contact
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.8rem">
+                <a
+                  href="tel:4033831092"
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.55rem;
+                    color: var(--gray);
+                    text-decoration: none;
+                    font-size: 0.875rem;
+                    transition: color 0.2s;
+                  "
+                  onmouseover="this.style.color = '#fff'"
+                  onmouseout="this.style.color = 'var(--gray)'"
+                  ><i
+                    class="fa fa-phone"
+                    style="color: var(--purple-l); width: 13px"
+                  ></i>
+                  403-383-1092</a
+                >
+                <a
+                  href="mailto:info@cambriancustompainting.com"
+                  style="
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.55rem;
+                    color: var(--gray);
+                    text-decoration: none;
+                    font-size: 0.875rem;
+                    transition: color 0.2s;
+                    word-break: break-all;
+                  "
+                  onmouseover="this.style.color = '#fff'"
+                  onmouseout="this.style.color = 'var(--gray)'"
+                  ><i
+                    class="fa fa-envelope"
+                    style="color: var(--magenta); width: 13px; margin-top: 3px"
+                  ></i>
+                  info@cambriancustompainting.com</a
+                >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.55rem;
+                    color: var(--gray);
+                    font-size: 0.875rem;
+                  "
+                >
+                  <i
+                    class="fa fa-location-dot"
+                    style="color: var(--teal); width: 13px"
+                  ></i>
+                  Calgary, Alberta, Canada
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              padding-top: 1.6rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 0.6rem;
+            "
+          >
+            <p
+              style="
+                font-family: var(--font-b);
+                font-size: 0.72rem;
+                color: var(--gray);
+              "
+            >
+              © 2026 Cambrian Custom Painting. All rights reserved.
+            </p>
+            <p
+              style="
+                font-family: var(--font-b);
+                font-size: 0.72rem;
+                color: var(--gray);
+              "
+            >
+              Making a Vivid
+              <span
+                style="font-family: var(--font-s); font-size: 1rem"
+                class="gt"
+                >Difference</span
+              >
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="pg" id="pg-about">
+      <div style="padding-top: 72px"></div>
+      <section
+        style="
+          padding: 5.5rem 2rem 4rem;
+          background: var(--dark);
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+              ellipse 55% 50% at 15% 65%,
+              rgba(155, 60, 247, 0.09),
+              transparent 60%
+            );
+          "
+        ></div>
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+          "
+          class="grid-2"
+        >
+          <div class="rl">
+            <p class="s-eye">Our Story</p>
+            <h1 class="s-h" style="margin-bottom: 1.4rem">
+              Passion poured<br />into every <span>surface.</span>
+            </h1>
+            <p class="s-p" style="margin-bottom: 1.1rem">
+              Founded in Calgary over a decade ago, Cambrian Custom Painting was
+              built on a singular conviction: that every painted surface is a
+              canvas for transformation — and every client deserves a result
+              that exceeds their imagination.
+            </p>
+            <p class="s-p" style="margin-bottom: 2.2rem">
+              Our team of certified master painters brings genuine artistry to
+              each project. We work exclusively with premium-grade materials and
+              time-tested techniques refined over thousands of projects.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.85rem">
+              <div class="sp-pill">
+                <div class="sp-ic"><i class="fa fa-star"></i></div>
+                <span class="sp-tx">15+ Years Experience</span>
+              </div>
+              <div class="sp-pill">
+                <div class="sp-ic"><i class="fa fa-medal"></i></div>
+                <span class="sp-tx">Licensed &amp; Insured</span>
+              </div>
+              <div class="sp-pill">
+                <div class="sp-ic"><i class="fa fa-shield-halved"></i></div>
+                <span class="sp-tx">Satisfaction Guarantee</span>
+              </div>
+            </div>
+          </div>
+          <div class="rr">
+            <div style="position: relative">
+              <img
+                src="after4.jpg"
+                alt="Finished custom deck"
+                style="
+                  width: 100%;
+                  height: 460px;
+                  object-fit: cover;
+                  border-radius: 16px;
+                "
+              />
+              <div
+                style="
+                  position: absolute;
+                  top: -18px;
+                  right: -16px;
+                  width: 155px;
+                  height: 155px;
+                  border-radius: 14px;
+                  overflow: hidden;
+                  border: 3px solid rgba(155, 60, 247, 0.28);
+                "
+              >
+                <img
+                  src="after1.jpg"
+                  alt="Detail"
+                  style="width: 100%; height: 100%; object-fit: cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 6rem 2rem; background: var(--black)">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div style="text-align: center; margin-bottom: 3.5rem" class="ru">
+            <p class="s-eye" style="justify-content: center">Our Values</p>
+            <h2 class="s-h">
+              The principles that<br />guide our <span>craft.</span>
+            </h2>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 2rem;
+            "
+            class="val-3"
+          >
+            <div
+              class="sc ru"
+              style="text-align: center; padding: 2.5rem 1.8rem"
+            >
+              <div
+                style="
+                  width: 62px;
+                  height: 62px;
+                  border-radius: 50%;
+                  background: linear-gradient(
+                    135deg,
+                    rgba(155, 60, 247, 0.2),
+                    rgba(233, 30, 140, 0.1)
+                  );
+                  border: 1px solid rgba(155, 60, 247, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1.4rem;
+                  font-size: 1.4rem;
+                "
+              >
+                <i
+                  class="fa fa-gem"
+                  style="
+                    background: var(--grad);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div
+                class="sc-t"
+                style="font-size: 1.15rem; margin-bottom: 0.7rem"
+              >
+                Excellence
+              </div>
+              <div class="sc-p">
+                No shortcut is ever taken. Every coat, every edge, every surface
+                is executed to the highest possible standard.
+              </div>
+            </div>
+            <div
+              class="sc ru"
+              style="text-align: center; padding: 2.5rem 1.8rem"
+            >
+              <div
+                style="
+                  width: 62px;
+                  height: 62px;
+                  border-radius: 50%;
+                  background: linear-gradient(
+                    135deg,
+                    rgba(6, 182, 212, 0.18),
+                    rgba(34, 197, 94, 0.1)
+                  );
+                  border: 1px solid rgba(6, 182, 212, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1.4rem;
+                  font-size: 1.4rem;
+                "
+              >
+                <i
+                  class="fa fa-handshake"
+                  style="
+                    background: linear-gradient(135deg, #06b6d4, #22c55e);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div
+                class="sc-t"
+                style="font-size: 1.15rem; margin-bottom: 0.7rem"
+              >
+                Integrity
+              </div>
+              <div class="sc-p">
+                Transparent pricing, honest timelines, and communication that
+                respects your time and investment.
+              </div>
+            </div>
+            <div
+              class="sc ru"
+              style="text-align: center; padding: 2.5rem 1.8rem"
+            >
+              <div
+                style="
+                  width: 62px;
+                  height: 62px;
+                  border-radius: 50%;
+                  background: linear-gradient(
+                    135deg,
+                    rgba(233, 30, 140, 0.18),
+                    rgba(245, 158, 11, 0.1)
+                  );
+                  border: 1px solid rgba(233, 30, 140, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1.4rem;
+                  font-size: 1.4rem;
+                "
+              >
+                <i
+                  class="fa fa-palette"
+                  style="
+                    background: linear-gradient(135deg, #e91e8c, #f59e0b);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  "
+                ></i>
+              </div>
+              <div
+                class="sc-t"
+                style="font-size: 1.15rem; margin-bottom: 0.7rem"
+              >
+                Artistry
+              </div>
+              <div class="sc-p">
+                Color consulting, texture expertise, and a creative eye that
+                elevates every project beyond the ordinary.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 6rem 2rem; background: var(--dark)">
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+          "
+          class="grid-2"
+        >
+          <div class="rl">
+            <p class="s-eye">How We Work</p>
+            <h2 class="s-h" style="margin-bottom: 2.5rem">
+              A refined process<br />for <span>perfect results.</span>
+            </h2>
+            <img
+              src="New_counstruction.jpg"
+              alt="Process"
+              style="
+                width: 100%;
+                height: 290px;
+                object-fit: cover;
+                border-radius: 14px;
+              "
+            />
+          </div>
+          <div
+            class="rr"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 2.5rem;
+              padding-top: 2.5rem;
+            "
+          >
+            <div class="ps" data-n="01">
+              <div class="ps-line"></div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--white);
+                  margin-bottom: 0.4rem;
+                  padding-top: 0.15rem;
+                "
+              >
+                Free Consultation
+              </div>
+              <div class="s-p" style="font-size: 0.875rem">
+                We visit your site, understand your vision, and assess surfaces,
+                conditions, and color requirements.
+              </div>
+            </div>
+            <div class="ps" data-n="02">
+              <div class="ps-line"></div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--white);
+                  margin-bottom: 0.4rem;
+                  padding-top: 0.15rem;
+                "
+              >
+                Detailed Quote
+              </div>
+              <div class="s-p" style="font-size: 0.875rem">
+                Transparent, itemized pricing with no hidden fees. You know
+                exactly what you're getting before we start.
+              </div>
+            </div>
+            <div class="ps" data-n="03">
+              <div class="ps-line"></div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--white);
+                  margin-bottom: 0.4rem;
+                  padding-top: 0.15rem;
+                "
+              >
+                Meticulous Preparation
+              </div>
+              <div class="s-p" style="font-size: 0.875rem">
+                Surface prep is where great paint jobs begin. We repair, prime,
+                and protect everything before any color is applied.
+              </div>
+            </div>
+            <div class="ps" data-n="04">
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--white);
+                  margin-bottom: 0.4rem;
+                  padding-top: 0.15rem;
+                "
+              >
+                Artisan Application
+              </div>
+              <div class="s-p" style="font-size: 0.875rem">
+                Premium paints, proper technique, and a team that stays until
+                the result is perfect — with a final walkthrough guarantee.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style="
+          padding: 4.5rem 2rem;
+          background: linear-gradient(
+            135deg,
+            rgba(155, 60, 247, 0.07),
+            rgba(6, 182, 212, 0.05)
+          );
+          border-top: 1px solid rgba(155, 60, 247, 0.1);
+          border-bottom: 1px solid rgba(155, 60, 247, 0.1);
+        "
+      >
+        <div
+          style="
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+          "
+          class="stat-g ru"
+        >
+          <div>
+            <div
+              style="
+                font-family: var(--font-d);
+                font-size: 2.8rem;
+                font-weight: 800;
+                line-height: 1;
+                margin-bottom: 0.3rem;
+              "
+              class="gt"
+            >
+              500+
+            </div>
+            <div
+              style="
+                font-family: var(--font-b);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--gray);
+              "
+            >
+              Projects Completed
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                font-family: var(--font-d);
+                font-size: 2.8rem;
+                font-weight: 800;
+                line-height: 1;
+                margin-bottom: 0.3rem;
+              "
+              class="gt"
+            >
+              15+
+            </div>
+            <div
+              style="
+                font-family: var(--font-b);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--gray);
+              "
+            >
+              Years in Business
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                font-family: var(--font-d);
+                font-size: 2.8rem;
+                font-weight: 800;
+                line-height: 1;
+                margin-bottom: 0.3rem;
+              "
+              class="gt"
+            >
+              12
+            </div>
+            <div
+              style="
+                font-family: var(--font-b);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--gray);
+              "
+            >
+              Team Members
+            </div>
+          </div>
+          <div>
+            <div
+              style="
+                font-family: var(--font-d);
+                font-size: 2.8rem;
+                font-weight: 800;
+                line-height: 1;
+                margin-bottom: 0.3rem;
+              "
+              class="gt"
+            >
+              5★
+            </div>
+            <div
+              style="
+                font-family: var(--font-b);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--gray);
+              "
+            >
+              Average Rating
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 6rem 2rem; background: var(--black)">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 2rem;
+              flex-wrap: wrap;
+              margin-bottom: 3rem;
+            "
+            class="ru rev-head"
+          >
+            <div>
+              <p class="s-eye">Client Love</p>
+              <h2 class="s-h">
+                What our clients<br /><span>are saying.</span>
+              </h2>
+            </div>
+            <div class="rev-badge">
+              <div>
+                <div class="rev-badge-num">4.9</div>
+                <div class="rev-stars">★★★★★</div>
+                <div class="rev-badge-sub">Google Reviews</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 1.4rem;
+              margin-bottom: 2.6rem;
+            "
+            class="rev-g"
+          >
+            <div class="rev-card ru">
+              <div class="rev-card-stars">★★★★★</div>
+              <p class="rev-quote">
+                Cambrian repainted our entire main floor and the finish is
+                flawless. The crew was meticulous with prep, cut razor-sharp
+                lines around every trim piece, and left the house cleaner than
+                they found it.
+              </p>
+              <div class="rev-person">
+                <div class="rev-avatar">JM</div>
+                <div>
+                  <div class="rev-name">Jennifer M.</div>
+                  <div class="rev-loc">Calgary, AB</div>
+                </div>
+              </div>
+            </div>
+            <div class="rev-card ru">
+              <div class="rev-card-stars">★★★★★</div>
+              <p class="rev-quote">
+                We hired them to stain a new deck and refinish our cabinetry.
+                The color matching was spot on and the wood grain really pops
+                now. Professional from quote to final walkthrough.
+              </p>
+              <div class="rev-person">
+                <div class="rev-avatar">DK</div>
+                <div>
+                  <div class="rev-name">David K.</div>
+                  <div class="rev-loc">Airdrie, AB</div>
+                </div>
+              </div>
+            </div>
+            <div class="rev-card ru">
+              <div class="rev-card-stars">★★★★★</div>
+              <p class="rev-quote">
+                Our restaurant needed a full exterior repaint with zero
+                disruption to business hours. Cambrian scheduled around us
+                perfectly and the new look has customers asking who did it.
+              </p>
+              <div class="rev-person">
+                <div class="rev-avatar">SP</div>
+                <div>
+                  <div class="rev-name">Sarah P.</div>
+                  <div class="rev-loc">Calgary, AB</div>
+                </div>
+              </div>
+            </div>
+            <div class="rev-card ru">
+              <div class="rev-card-stars">★★★★★</div>
+              <p class="rev-quote">
+                Removed our old popcorn ceiling and skim-coated the whole main
+                level. Dust protection was excellent and the final finish
+                looks like a brand new home. Highly recommend.
+              </p>
+              <div class="rev-person">
+                <div class="rev-avatar">RT</div>
+                <div>
+                  <div class="rev-name">Ryan T.</div>
+                  <div class="rev-loc">Cochrane, AB</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center" class="ru">
+            <a
+              href="https://maps.app.goo.gl/YYNvRBs5VGpR8MM68?g_st=iwb"
+              target="_blank"
+              rel="noopener"
+              class="btn-o"
+            >
+              <i class="fa-brands fa-google"></i> Write a Review on Google
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style="padding: 5rem 2rem; background: var(--dark); text-align: center"
+      >
+        <div class="ru">
+          <h2 class="s-h" style="margin-bottom: 1.4rem">
+            Ready to work<br />with the <span>best?</span>
+          </h2>
+          <button class="btn" data-nav="contact">
+            <i class="fa fa-phone"></i> Get a Free Quote
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="pg" id="pg-services">
+      <div style="padding-top: 72px"></div>
+      <section
+        style="
+          padding: 5rem 2rem 3rem;
+          background: var(--dark);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+              ellipse 55% 45% at 50% 30%,
+              rgba(233, 30, 140, 0.09),
+              transparent 60%
+            );
+          "
+        ></div>
+        <div style="position: relative; z-index: 1" class="ru">
+          <p class="s-eye" style="justify-content: center">What We Offer</p>
+          <h1
+            class="s-h"
+            style="font-size: clamp(2.4rem, 5vw, 3.8rem); margin-bottom: 1.1rem"
+          >
+            Premium Painting<br /><span>Services.</span>
+          </h1>
+          <p class="s-p" style="max-width: 520px; margin: 0 auto">
+            Every surface, every finish — executed to perfection for residential
+            and commercial spaces of all scales.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 4rem 2rem 6rem; background: var(--black)">
+        <div
+          style="
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+          "
+          class="svc-3"
+        >
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+            class="svc-inner"
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt="Interior"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div class="sc-ico">
+                  <i
+                    class="fa fa-house"
+                    style="
+                      background: linear-gradient(135deg, #9b3cf7, #e91e8c);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  Interior Painting
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Luxury living spaces transformed with premium paints and
+                  masterful technique. Walls, ceilings, trim, cabinetry, and
+                  accent walls.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--purple-l); font-size: 0.68rem"
+                    ></i>
+                    Premium paint brands
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--purple-l); font-size: 0.68rem"
+                    ></i>
+                    Color consulting
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--purple-l); font-size: 0.68rem"
+                    ></i>
+                    Decorative finishes
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt="Exterior"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div
+                  class="sc-ico"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(6, 182, 212, 0.18),
+                      rgba(34, 197, 94, 0.1)
+                    );
+                    border-color: rgba(6, 182, 212, 0.2);
+                  "
+                >
+                  <i
+                    class="fa fa-building"
+                    style="
+                      background: linear-gradient(135deg, #06b6d4, #22c55e);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  Exterior Painting
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Weather-sealed architectural finishes for homes and estates.
+                  Built to withstand Calgary's demanding climate.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    Weather-resistant coatings
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    Power washing prep
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    Siding, trim &amp; fascia
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="Stucco_Removal.jpg"
+                alt="Stucco"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div
+                  class="sc-ico"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(233, 30, 140, 0.18),
+                      rgba(155, 60, 247, 0.1)
+                    );
+                    border-color: rgba(233, 30, 140, 0.2);
+                  "
+                >
+                  <i
+                    class="fa fa-hammer"
+                    style="
+                      background: linear-gradient(135deg, #e91e8c, #9b3cf7);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  Stucco Removal
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Eliminate dated textured ceilings and walls to reveal clean,
+                  modern surfaces ready for contemporary finishes.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--magenta); font-size: 0.68rem"
+                    ></i>
+                    Ceiling &amp; wall stucco
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--magenta); font-size: 0.68rem"
+                    ></i>
+                    Full dust protection
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--magenta); font-size: 0.68rem"
+                    ></i>
+                    Skim coat finish
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="after4.jpg"
+                alt="Stain Varnish"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div
+                  class="sc-ico"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(245, 158, 11, 0.18),
+                      rgba(155, 60, 247, 0.1)
+                    );
+                    border-color: rgba(245, 158, 11, 0.2);
+                  "
+                >
+                  <i
+                    class="fa fa-tree"
+                    style="
+                      background: linear-gradient(135deg, #f59e0b, #9b3cf7);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  Stain &amp; Varnish
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Enhancing the natural beauty of wood through expert staining
+                  and varnishing of cabinetry, millwork, and carpentry.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: #f59e0b; font-size: 0.68rem"
+                    ></i>
+                    Cabinetry refinishing
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: #f59e0b; font-size: 0.68rem"
+                    ></i>
+                    Deck staining &amp; sealing
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: #f59e0b; font-size: 0.68rem"
+                    ></i>
+                    Interior wood floors
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="Commerical_and_Hospitality.jpg"
+                alt="Commercial"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div
+                  class="sc-ico"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(6, 182, 212, 0.18),
+                      rgba(155, 60, 247, 0.1)
+                    );
+                    border-color: rgba(6, 182, 212, 0.2);
+                  "
+                >
+                  <i
+                    class="fa fa-hotel"
+                    style="
+                      background: linear-gradient(135deg, #06b6d4, #9b3cf7);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  Commercial &amp; Hospitality
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Hotels, motels, restaurants, and retail spaces finished to
+                  brand standards with minimal operational disruption.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    Hotels &amp; motels
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    Restaurants &amp; retail
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--teal); font-size: 0.68rem"
+                    ></i>
+                    After-hours scheduling
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="sc ru"
+            style="
+              display: grid;
+              padding: 0;
+              overflow: hidden;
+              border-radius: 16px;
+              min-height: 310px;
+            "
+          >
+            <div style="display: grid; grid-template-columns: 1fr 1fr">
+              <img
+                src="New_counstruction.jpg"
+                alt="New Construction"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+              <div style="padding: 2rem">
+                <div
+                  class="sc-ico"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(34, 197, 94, 0.18),
+                      rgba(6, 182, 212, 0.1)
+                    );
+                    border-color: rgba(34, 197, 94, 0.2);
+                  "
+                >
+                  <i
+                    class="fa fa-ruler-combined"
+                    style="
+                      background: linear-gradient(135deg, #22c55e, #06b6d4);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    "
+                  ></i>
+                </div>
+                <div class="sc-t" style="font-size: 1.15rem">
+                  New Constructions
+                </div>
+                <div class="sc-p" style="margin-bottom: 0.9rem">
+                  Partnering with builders and developers to deliver flawless
+                  handovers — on time, on budget, to the highest standards.
+                </div>
+                <ul
+                  style="
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.35rem;
+                  "
+                >
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--green); font-size: 0.68rem"
+                    ></i>
+                    Builder partnerships
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--green); font-size: 0.68rem"
+                    ></i>
+                    Schedule coordination
+                  </li>
+                  <li
+                    style="
+                      font-size: 0.76rem;
+                      color: var(--gray-l);
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+                    "
+                  >
+                    <i
+                      class="fa fa-check"
+                      style="color: var(--green); font-size: 0.68rem"
+                    ></i>
+                    Deficiency touch-ups
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            max-width: 660px;
+            margin: 3.5rem auto 0;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--card);
+            border: 1px solid rgba(155, 60, 247, 0.14);
+            border-radius: 20px;
+          "
+          class="ru"
+        >
+          <h3
+            style="
+              font-family: var(--font-d);
+              font-size: 1.55rem;
+              font-weight: 800;
+              color: var(--white);
+              margin-bottom: 0.7rem;
+            "
+          >
+            Not sure which service fits?
+          </h3>
+          <p
+            class="s-p"
+            style="
+              margin-bottom: 1.7rem;
+              font-size: 0.875rem;
+              max-width: 400px;
+              margin-left: auto;
+              margin-right: auto;
+              margin-top: 0;
+            "
+          >
+            Our specialists are happy to assess your space and recommend the
+            ideal solution — completely free.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="tel:4033831092" class="btn"
+              ><i class="fa fa-phone"></i> 403-383-1092</a
+            >
+            <button class="btn-o" data-nav="contact">Request a Quote</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="pg" id="pg-gallery">
+      <div style="padding-top: 72px"></div>
+      <section
+        style="
+          padding: 5rem 2rem 3rem;
+          background: var(--dark);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+              ellipse 55% 40% at 50% 30%,
+              rgba(6, 182, 212, 0.09),
+              transparent 60%
+            );
+          "
+        ></div>
+        <div style="position: relative; z-index: 1" class="ru">
+          <p class="s-eye" style="justify-content: center">Our Portfolio</p>
+          <h1
+            class="s-h"
+            style="font-size: clamp(2.4rem, 5vw, 3.8rem); margin-bottom: 1.1rem"
+          >
+            Transformations<br />that <span>speak.</span>
+          </h1>
+          <p class="s-p" style="max-width: 480px; margin: 0 auto">
+            Every image tells a story of precision, color mastery, and the art
+            of transformation.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 4rem 2rem; background: var(--black)">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div style="margin-bottom: 2.8rem" class="ru">
+            <p class="s-eye">Before &amp; After</p>
+            <h2 class="s-h" style="margin-bottom: 0.4rem">
+              Drag to <span>reveal</span>
+            </h2>
+            <p class="s-p" style="font-size: 0.875rem">
+              Slide the divider to compare before and after transformations.
+            </p>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem"
+            class="ba-g ru"
+          >
+            <div>
+              <div class="ba" id="ba1" style="height: 370px">
+                <img
+                  class="ba-b"
+                  src="before1.jpg"
+                  alt="Before - Interior Hallway"
+                />
+                <div class="ba-clip" id="ba1c" style="width: 50%">
+                  <img src="after1.jpg" alt="After - Interior Hallway" />
+                </div>
+                <div class="ba-div" id="ba1d" style="left: 50%">
+                  <div class="ba-hnd">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path
+                        d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11"
+                        stroke="#555"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="ba-lbl ba-lbl-b">After</span
+                ><span class="ba-lbl ba-lbl-a">Before</span>
+              </div>
+              <p class="ba-cap">Interior Hallway</p>
+            </div>
+            <div>
+              <div class="ba" id="ba2" style="height: 370px">
+                <img
+                  class="ba-b"
+                  src="before2.jpg"
+                  alt="Before - Exterior Stucco"
+                />
+                <div class="ba-clip" id="ba2c" style="width: 50%">
+                  <img src="after2.jpg" alt="After - Exterior Stucco" />
+                </div>
+                <div class="ba-div" id="ba2d" style="left: 50%">
+                  <div class="ba-hnd">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path
+                        d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11"
+                        stroke="#555"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="ba-lbl ba-lbl-b">After</span
+                ><span class="ba-lbl ba-lbl-a">Before</span>
+              </div>
+              <p class="ba-cap">Exterior Stucco</p>
+            </div>
+            <div>
+              <div class="ba" id="ba3" style="height: 370px">
+                <img
+                  class="ba-b"
+                  src="before3.jpg"
+                  alt="Before - Modern Elevation"
+                />
+                <div class="ba-clip" id="ba3c" style="width: 50%">
+                  <img src="after3.jpg" alt="After - Modern Elevation" />
+                </div>
+                <div class="ba-div" id="ba3d" style="left: 50%">
+                  <div class="ba-hnd">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path
+                        d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11"
+                        stroke="#555"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="ba-lbl ba-lbl-b">After</span
+                ><span class="ba-lbl ba-lbl-a">Before</span>
+              </div>
+              <p class="ba-cap">Modern Elevation</p>
+            </div>
+            <div>
+              <div class="ba" id="ba4" style="height: 370px">
+                <img
+                  class="ba-b"
+                  src="before4.jpg"
+                  alt="Before - Deck Staining"
+                />
+                <div class="ba-clip" id="ba4c" style="width: 50%">
+                  <img src="after4.jpg" alt="After - Deck Staining" />
+                </div>
+                <div class="ba-div" id="ba4d" style="left: 50%">
+                  <div class="ba-hnd">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path
+                        d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11"
+                        stroke="#555"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="ba-lbl ba-lbl-b">After</span
+                ><span class="ba-lbl ba-lbl-a">Before</span>
+              </div>
+              <p class="ba-cap">Deck Staining</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 1rem 2rem 6rem; background: var(--black)">
+        <div style="max-width: 1200px; margin: 0 auto">
+          <div style="margin-bottom: 2.5rem" class="ru">
+            <p class="s-eye">Recent Work</p>
+            <h2 class="s-h">Project <span>Showcase</span></h2>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 1.1rem;
+            "
+            class="gal-g ru"
+          >
+            <div
+              class="gi g-span2"
+              style="grid-row: span 2; height: 490px"
+              onclick="openLB('after1.jpg')"
+            >
+              <img src="after1.jpg" alt="Interior hallway finished" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Interior — Hallway Renovation</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 234px"
+              onclick="openLB('after2.jpg')"
+            >
+              <img src="after2.jpg" alt="Exterior stucco finished" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Exterior — Stucco Refinish</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 234px"
+              onclick="openLB('after3.jpg')"
+            >
+              <img src="after3.jpg" alt="Modern elevation finished" />
+              <div class="gi-ov">
+                <span class="gi-lbl">New Construction — Modern Elevation</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 226px"
+              onclick="openLB('after4.jpg')"
+            >
+              <img src="after4.jpg" alt="Deck staining finished" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Stain &amp; Varnish — Custom Deck</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 226px"
+              onclick="openLB('Commerical_and_Hospitality.jpg')"
+            >
+              <img
+                src="Commerical_and_Hospitality.jpg"
+                alt="Commercial and hospitality painting"
+              />
+              <div class="gi-ov">
+                <span class="gi-lbl">Commercial &amp; Hospitality</span>
+              </div>
+            </div>
+            <div
+              class="gi g-col2"
+              style="grid-column: span 2; height: 226px"
+              onclick="openLB('before1.jpg')"
+            >
+              <img src="before1.jpg" alt="Interior hallway before" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Interior — Before Prep</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 220px"
+              onclick="openLB('Stucco_Removal.jpg')"
+            >
+              <img src="Stucco_Removal.jpg" alt="Stucco removal in progress" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Stucco Removal</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 220px"
+              onclick="openLB('before4.jpg')"
+            >
+              <img src="before4.jpg" alt="Deck before staining" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Deck — Before Staining</span>
+              </div>
+            </div>
+            <div
+              class="gi"
+              style="height: 220px"
+              onclick="openLB('before2.jpg')"
+            >
+              <img src="before2.jpg" alt="Exterior stucco before" />
+              <div class="gi-ov">
+                <span class="gi-lbl">Exterior — Before Refinish</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style="
+          padding: 3.5rem 2rem 5rem;
+          background: var(--dark);
+          text-align: center;
+        "
+      >
+        <div class="ru">
+          <h2 class="s-h" style="margin-bottom: 1.1rem">
+            Love what you see?<br />Let's <span>build yours.</span>
+          </h2>
+          <button class="btn" data-nav="contact" style="margin-top: 1.4rem">
+            <i class="fa fa-envelope"></i> Get in Touch
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="pg" id="pg-contact">
+      <div style="padding-top: 72px"></div>
+      <section
+        style="
+          padding: 5rem 2rem 3rem;
+          background: var(--dark);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+              ellipse 50% 40% at 50% 30%,
+              rgba(155, 60, 247, 0.11),
+              transparent 65%
+            );
+          "
+        ></div>
+        <div style="position: relative; z-index: 1" class="ru">
+          <p class="s-eye" style="justify-content: center">Let's Connect</p>
+          <h1
+            class="s-h"
+            style="font-size: clamp(2.4rem, 5vw, 3.8rem); margin-bottom: 1.1rem"
+          >
+            Start your <span>transformation</span><br />today.
+          </h1>
+          <p class="s-p" style="max-width: 500px; margin: 0 auto">
+            Request a free consultation or send us a message. We respond within
+            24 hours — often the same day.
+          </p>
+        </div>
+      </section>
+
+      <section style="padding: 2rem 2rem; background: var(--black)">
+        <div
+          style="
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.1rem;
+          "
+          class="cc-g ru"
+        >
+          <a href="tel:4033831092" class="cc">
+            <div class="cc-ico">
+              <i
+                class="fa fa-phone"
+                style="
+                  background: var(--grad);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  font-size: 1.05rem;
+                "
+              ></i>
+            </div>
+            <div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 0.68rem;
+                  font-weight: 600;
+                  letter-spacing: 0.15em;
+                  text-transform: uppercase;
+                  color: var(--purple-l);
+                  margin-bottom: 0.35rem;
+                "
+              >
+                Call Us
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.98rem;
+                  font-weight: 600;
+                  color: var(--white);
+                  margin-bottom: 0.15rem;
+                "
+              >
+                403-383-1092
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.72rem;
+                  color: var(--gray);
+                "
+              >
+                Mon – Sat, 8am – 6pm MST
+              </div>
+            </div>
+          </a>
+          <a href="mailto:info@cambriancustompainting.com" class="cc">
+            <div class="cc-ico">
+              <i
+                class="fa fa-envelope"
+                style="color: var(--magenta); font-size: 1.05rem"
+              ></i>
+            </div>
+            <div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 0.68rem;
+                  font-weight: 600;
+                  letter-spacing: 0.15em;
+                  text-transform: uppercase;
+                  color: var(--purple-l);
+                  margin-bottom: 0.35rem;
+                "
+              >
+                Email Us
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.82rem;
+                  font-weight: 600;
+                  color: var(--white);
+                  margin-bottom: 0.15rem;
+                  word-break: break-all;
+                "
+              >
+                info@cambriancustompainting.com
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.72rem;
+                  color: var(--gray);
+                "
+              >
+                Reply within 24 hours
+              </div>
+            </div>
+          </a>
+          <div class="cc">
+            <div class="cc-ico">
+              <i
+                class="fa fa-location-dot"
+                style="color: var(--teal); font-size: 1.05rem"
+              ></i>
+            </div>
+            <div>
+              <div
+                style="
+                  font-family: var(--font-d);
+                  font-size: 0.68rem;
+                  font-weight: 600;
+                  letter-spacing: 0.15em;
+                  text-transform: uppercase;
+                  color: var(--purple-l);
+                  margin-bottom: 0.35rem;
+                "
+              >
+                Location
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.98rem;
+                  font-weight: 600;
+                  color: var(--white);
+                  margin-bottom: 0.15rem;
+                "
+              >
+                Calgary, Alberta
+              </div>
+              <div
+                style="
+                  font-family: var(--font-b);
+                  font-size: 0.72rem;
+                  color: var(--gray);
+                "
+              >
+                Serving all of Southern Alberta
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 2.5rem 2rem 6rem; background: var(--black)">
+        <div style="max-width: 760px; margin: 0 auto">
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid rgba(155, 60, 247, 0.12);
+              border-radius: 20px;
+              padding: 3rem;
+            "
+            class="ru"
+          >
+            <h2 class="s-h" style="margin-bottom: 0.4rem; font-size: 1.75rem">
+              Free Quote Request
+            </h2>
+            <p class="s-p" style="margin-bottom: 2.4rem; font-size: 0.875rem">
+              Fill in the details below and we'll prepare a tailored quote for
+              your project.
+            </p>
+            <form id="cf" onsubmit="sendForm(event)">
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1.1rem;
+                "
+              >
+                <div class="fg">
+                  <label class="fl" for="fn">First Name</label
+                  ><input
+                    class="fi"
+                    type="text"
+                    id="fn"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+                <div class="fg">
+                  <label class="fl" for="fln">Last Name</label
+                  ><input
+                    class="fi"
+                    type="text"
+                    id="fln"
+                    placeholder="Smith"
+                    required
+                  />
+                </div>
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1.1rem;
+                "
+              >
+                <div class="fg">
+                  <label class="fl" for="fe">Email Address</label
+                  ><input
+                    class="fi"
+                    type="email"
+                    id="fe"
+                    placeholder="john@example.com"
+                    required
+                  />
+                </div>
+                <div class="fg">
+                  <label class="fl" for="fp">Phone Number</label
+                  ><input
+                    class="fi"
+                    type="tel"
+                    id="fp"
+                    placeholder="403-xxx-xxxx"
+                  />
+                </div>
+              </div>
+              <div class="fg">
+                <label class="fl" for="fs-sel">Service Required</label>
+                <select class="fs" id="fs-sel" required>
+                  <option value="" disabled selected>
+                    Select a service...
+                  </option>
+                  <option value="interior">Interior Painting</option>
+                  <option value="exterior">Exterior Painting</option>
+                  <option value="stucco">Stucco Removal</option>
+                  <option value="stain">Stain &amp; Varnish</option>
+                  <option value="commercial">
+                    Commercial &amp; Hospitality
+                  </option>
+                  <option value="construction">New Constructions</option>
+                  <option value="other">Other / Multiple Services</option>
+                </select>
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1.1rem;
+                "
+              >
+                <div class="fg">
+                  <label class="fl" for="fd">Preferred Date</label>
+                  <input class="fi" type="date" id="fd" />
+                </div>
+                <div class="fg">
+                  <label class="fl" for="ft">Preferred Time</label>
+                  <input class="fi" type="time" id="ft" />
+                </div>
+              </div>
+              <div class="fg">
+                <label class="fl" for="fm">Project Details</label>
+                <textarea
+                  class="ft"
+                  id="fm"
+                  placeholder="Tell us about your project, timeline, and any specific requirements..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                id="sb"
+                class="btn"
+                style="width: 100%; justify-content: center"
+              >
+                <i class="fa fa-paper-plane"></i> Send My Request
+              </button>
+            </form>
+          </div>
+
+          <div
+            style="
+              text-align: center;
+              margin-top: 2.2rem;
+              padding: 1.8rem 2rem;
+              background: linear-gradient(
+                135deg,
+                rgba(155, 60, 247, 0.08),
+                rgba(6, 182, 212, 0.05)
+              );
+              border: 1px solid rgba(155, 60, 247, 0.1);
+              border-radius: 16px;
+            "
+            class="ru"
+          >
+            <p
+              style="
+                font-family: var(--font-b);
+                font-size: 0.875rem;
+                color: var(--gray);
+                margin-bottom: 1rem;
+              "
+            >
+              Prefer to speak directly with our team?
+            </p>
+            <a
+              href="tel:4033831092"
+              class="btn"
+              style="font-size: 0.88rem; padding: 1rem 2.2rem"
+              ><i class="fa fa-phone-flip"></i> Call 403-383-1092</a
+            >
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        const dot = document.getElementById("cur-dot");
+        const ring = document.getElementById("cur-ring");
+        let mx = 0,
+          my = 0,
+          rx = 0,
+          ry = 0;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          dot.style.left = mx + "px";
+          dot.style.top = my + "px";
+        });
+        (function loop() {
+          rx += (mx - rx) * 0.11;
+          ry += (my - ry) * 0.11;
+          ring.style.left = rx + "px";
+          ring.style.top = ry + "px";
+          requestAnimationFrame(loop);
+        })();
+        document
+          .querySelectorAll(
+            "a,button,[data-nav],input,textarea,select,.gi,.ba,.sc",
+          )
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+              ring.style.width = "54px";
+              ring.style.height = "54px";
+              ring.style.borderColor = "rgba(233,30,140,.65)";
+            });
+            el.addEventListener("mouseleave", () => {
+              ring.style.width = "36px";
+              ring.style.height = "36px";
+              ring.style.borderColor = "rgba(155,60,247,.55)";
+            });
+          });
+
+        let lenis;
+        function initLenis() {
+          if (lenis) lenis.destroy();
+          lenis = new Lenis({
+            duration: 1.4,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+          function raf(t) {
+            lenis.raf(t);
+            requestAnimationFrame(raf);
+          }
+          requestAnimationFrame(raf);
+        }
+        initLenis();
+
+        const nav = document.getElementById("nav");
+        window.addEventListener(
+          "scroll",
+          () => nav.classList.toggle("scrolled", window.scrollY > 28),
+          { passive: true },
+        );
+
+        const pages = {
+          home: document.getElementById("pg-home"),
+          about: document.getElementById("pg-about"),
+          services: document.getElementById("pg-services"),
+          gallery: document.getElementById("pg-gallery"),
+          contact: document.getElementById("pg-contact"),
+        };
+        const pt = document.getElementById("pt");
+        let cur = "home";
+
+        function go(p) {
+          if (p === cur) {
+            closeMenu();
+            return;
+          }
+          closeMenu();
+          gsap.to(pt, {
+            scaleX: 1,
+            duration: 0.42,
+            ease: "power3.in",
+            transformOrigin: "left",
+            onComplete: () => {
+              Object.keys(pages).forEach((k) => {
+                pages[k].classList.remove("active");
+                pages[k].style.opacity = 0;
+              });
+              pages[p].classList.add("active");
+              cur = p;
+              setActive(p);
+              window.scrollTo(0, 0);
+              if (lenis) lenis.scrollTo(0, { immediate: true });
+              gsap.to(pt, {
+                scaleX: 0,
+                duration: 0.46,
+                ease: "power3.out",
+                transformOrigin: "right",
+                delay: 0.05,
+                onComplete: () => {
+                  gsap.to(pages[p], { opacity: 1, duration: 0.36 });
+                  setupPage(p);
+                },
+              });
+            },
+          });
+        }
+
+        function setActive(p) {
+          document
+            .querySelectorAll("[data-nav]")
+            .forEach((el) =>
+              el.classList.toggle("act", el.getAttribute("data-nav") === p),
+            );
+        }
+
+        document.addEventListener("click", (e) => {
+          const n = e.target.closest("[data-nav]");
+          if (n && pages[n.getAttribute("data-nav")])
+            go(n.getAttribute("data-nav"));
+        });
+
+        const ham = document.getElementById("ham");
+        const mob = document.getElementById("mob-menu");
+        ham.addEventListener("click", () => {
+          ham.classList.toggle("open");
+          mob.classList.toggle("open");
+        });
+        function closeMenu() {
+          ham.classList.remove("open");
+          mob.classList.remove("open");
+        }
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            closeMenu();
+            closeLB();
+          }
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        function setupScrollReveal() {
+          document.querySelectorAll(".ru").forEach((el) => {
+            if (el._st) return;
+            el._st = true;
+            gsap.fromTo(
+              el,
+              { opacity: 0, y: 46 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.88,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 89%",
+                  toggleActions: "play none none none",
+                },
+              },
+            );
+          });
+          document.querySelectorAll(".rl").forEach((el) => {
+            if (el._st) return;
+            el._st = true;
+            gsap.fromTo(
+              el,
+              { opacity: 0, x: -46 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.88,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 89%",
+                  toggleActions: "play none none none",
+                },
+              },
+            );
+          });
+          document.querySelectorAll(".rr").forEach((el) => {
+            if (el._st) return;
+            el._st = true;
+            gsap.fromTo(
+              el,
+              { opacity: 0, x: 46 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.88,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 89%",
+                  toggleActions: "play none none none",
+                },
+              },
+            );
+          });
+          const pi = document.getElementById("par-img");
+          if (pi && !pi._par) {
+            pi._par = true;
+            gsap.to(pi, {
+              yPercent: -12,
+              ease: "none",
+              scrollTrigger: {
+                trigger: pi.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.5,
+              },
+            });
+          }
+        }
+
+        function animateHero() {
+          ScrollTrigger.getAll().forEach((t) => t.kill());
+          gsap.set("#hero-img", { clipPath: "inset(0 100% 0 0)", scale: 1.14 });
+          const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+          tl.to(
+            "#hero-img",
+            {
+              clipPath: "inset(0 0% 0 0)",
+              scale: 1.04,
+              duration: 1.6,
+              ease: "power4.inOut",
+            },
+            0,
+          )
+            .to("#h-eye", { opacity: 1, duration: 0.75 }, 0.5)
+            .to(
+              ["#hw1", "#hw2"],
+              { opacity: 1, y: 0, duration: 0.65, stagger: 0.08 },
+              0.72,
+            )
+            .to("#hw3", { opacity: 1, y: 0, duration: 0.65 }, 0.95)
+            .to("#hw4", { opacity: 1, y: 0, duration: 0.75 }, 1.15)
+            .to(
+              "#ul-path",
+              { strokeDashoffset: 0, duration: 1.05, ease: "power2.out" },
+              1.42,
+            )
+            .to("#h-sub", { opacity: 1, duration: 0.65 }, 1.65)
+            .to("#h-stats", { opacity: 1, duration: 0.6 }, 1.85)
+            .to("#h-si", { opacity: 1, duration: 0.5 }, 2.2);
+          setupScrollReveal();
+        }
+
+        function initBA(cId, clipId, divId) {
+          const c = document.getElementById(cId),
+            cl = document.getElementById(clipId),
+            dv = document.getElementById(divId);
+          if (!c || !cl || !dv) return;
+          let drag = false;
+          function setPos(x) {
+            const r = c.getBoundingClientRect();
+            const pct = Math.max(
+              4,
+              Math.min(96, ((x - r.left) / r.width) * 100),
+            );
+            cl.style.width = pct + "%";
+            dv.style.left = pct + "%";
+          }
+          dv.addEventListener("mousedown", () => (drag = true));
+          document.addEventListener("mouseup", () => (drag = false));
+          document.addEventListener("mousemove", (e) => {
+            if (drag) setPos(e.clientX);
+          });
+          dv.addEventListener(
+            "touchstart",
+            (e) => {
+              drag = true;
+              e.preventDefault();
+            },
+            { passive: false },
+          );
+          document.addEventListener("touchend", () => (drag = false));
+          document.addEventListener(
+            "touchmove",
+            (e) => {
+              if (drag) setPos(e.touches[0].clientX);
+            },
+            { passive: true },
+          );
+        }
+
+        function setupPage(p) {
+          ScrollTrigger.getAll().forEach((t) => t.kill());
+          document
+            .querySelectorAll(".ru,.rl,.rr")
+            .forEach((el) => delete el._st);
+          document.querySelectorAll("#par-img").forEach((el) => delete el._par);
+
+          if (p === "home") {
+            animateHero();
+          } else {
+            setupScrollReveal();
+          }
+
+          if (p === "gallery") {
+            initBA("ba1", "ba1c", "ba1d");
+            initBA("ba2", "ba2c", "ba2d");
+            initBA("ba3", "ba3c", "ba3d");
+            initBA("ba4", "ba4c", "ba4d");
+          }
+        }
+
+        const lb = document.getElementById("lb");
+        const lbImg = document.getElementById("lb-img");
+        function openLB(src) {
+          lbImg.src = src;
+          lb.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+        function closeLB() {
+          lb.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+        window.openLB = openLB;
+        document.getElementById("lb-x").addEventListener("click", closeLB);
+        lb.addEventListener("click", (e) => {
+          if (e.target === lb) closeLB();
+        });
+
+        window.sendForm = function (e) {
+          e.preventDefault();
+
+          const firstName = document.getElementById("fn").value.trim();
+          const lastName = document.getElementById("fln").value.trim();
+          const email = document.getElementById("fe").value.trim();
+          const phone = document.getElementById("fp").value.trim();
+          const service = document.getElementById("fs-sel").value;
+          const date = document.getElementById("fd").value;
+          const time = document.getElementById("ft").value;
+          const message = document.getElementById("fm").value.trim();
+
+          const serviceLabel =
+            {
+              interior: "Interior Painting",
+              exterior: "Exterior Painting",
+              stucco: "Stucco Removal",
+              stain: "Stain & Varnish",
+              commercial: "Commercial & Hospitality",
+              construction: "New Constructions",
+              other: "Other / Multiple Services",
+            }[service] || service;
+
+          const fullName =
+            [firstName, lastName].filter(Boolean).join(" ") || "N/A";
+          const formattedDate = date
+            ? new Date(date + "T00:00:00").toLocaleDateString("en-CA", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            : "Not specified";
+
+          const text = [
+            "Hello Cambrian Custom Painting!",
+            "",
+            "*New Booking Request*",
+            "",
+            "*Name:* " + fullName,
+            "*Email:* " + (email || "N/A"),
+            "*Phone:* " + (phone || "N/A"),
+            "*Service:* " + (serviceLabel || "N/A"),
+            "*Preferred Date:* " + formattedDate,
+            "*Preferred Time:* " + (time || "Not specified"),
+            "",
+            "*Project Details:*",
+            message || "No additional details provided.",
+          ].join("\n");
+
+          const whatsappUrl =
+            "https://wa.me/14033831092?text=" + encodeURIComponent(text);
+
+          const win = window.open(whatsappUrl, "_blank");
+          if (win) win.opener = null;
+
+          e.target.reset();
+          showToast("Opening WhatsApp with your booking details...");
+        };
+
+        const toastEl = document.getElementById("toast");
+        const toastMsg = document.getElementById("t-msg");
+        function showToast(msg) {
+          toastMsg.textContent = msg;
+          toastEl.classList.add("show");
+          setTimeout(() => toastEl.classList.remove("show"), 4200);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          pages.home.style.opacity = "1";
+          animateHero();
+        });
+      })();
+    </script>
+  </body>
+</html>
